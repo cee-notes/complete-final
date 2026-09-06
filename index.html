@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEE Notes</title>
+<link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/cee-notes/website-complete/main/CEE%20Notes%20Logo.jpg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- loading overlay -->
+<div id="loadingOverlay" class="loading-overlay hidden" role="status" aria-live="polite">
+<div class="spinner" aria-hidden="true"></div>
+<p id="loadingText">Loading…</p>
+</div>
+<!-- toasts -->
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<!-- print-only header (visible only when printing the result / review views) -->
+<div class="print-header" aria-hidden="true">
+<div class="ph-brand"><b>CEE Mock Portal</b><span>MBBS · BDS Entrance Practice — Nepal</span></div>
+<div class="ph-stamp"></div>
+</div>
+<!-- ============================ HEADER ============================ -->
+<header class="app-header">
+<div class="container header-inner">
+<div class="brand" id="brandHome" role="button" tabindex="0" aria-label="CEE Notes home">
+<img class="brand-logo" src="https://raw.githubusercontent.com/cee-notes/website-complete/main/CEE%20Notes%20Logo.jpg" alt="CEE Notes Logo" width="32" height="32">
+<div class="brand-text">
+<h1>CEE Notes</h1>
+<p>MBBS · BDS Entrance Practice — Nepal</p>
+</div>
+</div>
+<div class="header-right">
+<span id="modeChip" class="mode-chip hidden">PREVIEW · SIMULATED BACKEND</span>
+<div id="userChip" class="user-chip hidden">
+<span class="avatar" id="userAvatar">S</span>
+<span class="u-name" id="userName">Student</span>
+<span id="userRole" class="badge role-student">student</span>
+</div>
+<button id="btnSettings" class="btn btn-ghost btn-sm hidden" aria-label="Account settings" title="Account settings"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.02a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.02a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.02a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button id="btnLogout" class="btn btn-ghost btn-sm hidden">Logout</button>
+</div>
+</div>
+</header>
+<main class="container" id="appMain">
+<!-- ============================ AUTH ============================ -->
+<section id="sec-auth" class="section" aria-label="Authentication">
+<div class="auth-hero">
+<h2>Practice. Analyze. <em>Succeed.</em></h2>
+<p>Free online mock tests for Nepal's MBBS / BDS Common Entrance Examination — official MECEE-BL 2026 syllabus, timed mocks with negative marking, instant scored reviews and unit-level topic analytics.</p>
+<div class="hero-chips">
+<span class="hero-chip"><b>MECEE-BL 2026</b>&nbsp;syllabus</span>
+<span class="hero-chip">official <b>200-Q</b> blueprint pacing</span>
+<span class="hero-chip">negative marking <b>−0.25</b></span>
+<span class="hero-chip"><b>+1</b> per correct answer</span>
+<span class="hero-chip"><b>MAT</b> mental agility tests</span>
+<span class="hero-chip">unit codes <b>Z/B/C/P/A</b></span>
+<span class="hero-chip">scored email <b>feedback</b></span>
+<span class="hero-chip"><a href="#" id="linkSyllabus">browse the official syllabus →</a></span>
+</div>
+</div>
+<div class="auth-grid">
+<!-- LOGIN -->
+<div class="card auth-card" id="loginCard">
+<h3>Welcome back</h3>
+<p class="sub">Log in to continue your preparation.</p>
+<form id="formLogin" novalidate>
+<div class="field">
+<label class="label" for="loginEmail">Email</label>
+<input class="input" type="email" id="loginEmail" autocomplete="email" placeholder="you@example.com" required>
+</div>
+<div class="field">
+<label class="label" for="loginPassword">Password</label>
+<input class="input" type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" required>
+</div>
+<div class="rm-row">
+<label class="cb"><input type="checkbox" id="loginRemember"><span class="cbx" aria-hidden="true"></span>Remember my email</label>
+</div>
+<p class="form-error" id="loginError"></p>
+<button class="btn btn-primary btn-block" id="btnLogin" type="submit">Log in</button>
+</form>
+<p class="form-alt">New here? <a id="linkToRegister">Create an account</a></p>
+</div>
+<!-- REGISTER -->
+<div class="card auth-card hidden" id="registerCard">
+<h3>Create your account</h3>
+<p class="sub">Students and teachers both register here.</p>
+<form id="formRegister" novalidate>
+<div class="field">
+<label class="label" for="regName">Full name</label>
+<input class="input" type="text" id="regName" autocomplete="name" placeholder="e.g. Sita Sharma" required>
+</div>
+<div class="field">
+<label class="label" for="regEmail">Email</label>
+<input class="input" type="email" id="regEmail" autocomplete="email" placeholder="you@example.com" required>
+</div>
+<div class="form-row">
+<div class="field">
+<label class="label" for="regUsername">Username <span class="dim">(optional)</span></label>
+<input class="input" type="text" id="regUsername" autocomplete="username" placeholder="auto from email">
+</div>
+<div class="field">
+<label class="label" for="regRole">I am a</label>
+<select class="select" id="regRole">
+<option value="student" selected>Student</option>
+<option value="teacher">Teacher / Admin</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="field">
+<label class="label" for="regPassword">Password</label>
+<input class="input" type="password" id="regPassword" autocomplete="new-password" placeholder="min 6 characters" required>
+<div class="pw-meter" id="pwMeter" aria-hidden="true">
+<i class="pw-bar"></i><i class="pw-bar"></i><i class="pw-bar"></i><i class="pw-bar"></i>
+</div>
+<p class="pw-hint small" id="pwHint"></p>
+</div>
+<div class="field">
+<label class="label" for="regConfirm">Confirm password</label>
+<input class="input" type="password" id="regConfirm" autocomplete="new-password" placeholder="repeat password" required>
+</div>
+</div>
+<p class="form-note">The very first account is auto-approved as the administrator (Teacher). All later accounts require manual approval — you will be emailed once reviewed.</p>
+<p class="form-error" id="registerError"></p>
+<button class="btn btn-primary btn-block" id="btnRegister" type="submit">Register</button>
+</form>
+<p class="form-alt">Already registered? <a id="linkToLogin">Log in</a></p>
+</div>
+</div>
+<!-- preview demo credentials (only when NOT running inside Google Apps Script) -->
+<div class="card demo-creds hidden" id="demoCreds">
+<div class="dc-head">Preview demo accounts</div>
+<div class="demo-row"><span class="muted">Teacher:</span> <code>teacher@cee.edu</code> / <code>demo1234</code> <button class="btn btn-ghost btn-sm" data-fill="teacher">Quick fill</button></div>
+<div class="demo-row"><span class="muted">Student:</span> <code>student@cee.edu</code> / <code>demo1234</code> <button class="btn btn-ghost btn-sm" data-fill="student">Quick fill</button></div>
+<div class="demo-row"><span class="muted">Pending:</span> <code>pending@cee.edu</code> / <code>demo1234</code> <span class="dim small">(awaiting approval — try logging in)</span></div>
+</div>
+</section>
+<!-- ============================ STUDENT DASHBOARD ============================ -->
+<section id="sec-student" class="section hidden" aria-label="Student dashboard">
+<div class="welcome-row">
+<div>
+<h2 id="studentWelcome">Welcome back!</h2>
+<p class="sub" id="studentSub">Ready for today's practice?</p>
+</div>
+<div class="actions">
+<button class="btn btn-ghost big" id="btnSyllabus"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8h7M9 12h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Official syllabus</button>
+<button class="btn btn-ghost big" id="btnPracticeSetup"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Practice setup</button>
+<button class="btn btn-primary big" id="btnStartExam">Start New Mock Test</button>
+</div>
+</div>
+<div class="stats-grid" id="studentStats">
+<div class="stat st-accent"><div class="stat-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="stat-label">Total attempts</div><div class="stat-num" id="stAttempts">0</div></div>
+<div class="stat"><div class="stat-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div><div class="stat-label">Average score</div><div class="stat-num" id="stAvg">—</div><div class="stat-sub" id="stAvgSub">across all mocks</div></div>
+<div class="stat st-green"><div class="stat-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.6 6.6L22 9.3l-5 4.9 1.2 7-6.2-3.7L5.8 21 7 14.2 2 9.3l7.4-.7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div><div class="stat-label">Best score</div><div class="stat-num" id="stBest">—</div></div>
+<div class="stat"><div class="stat-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="stat-label">Questions attempted</div><div class="stat-num" id="stQuestions">0</div></div>
+</div>
+<!-- ======================= MODEL EXAM OF THE DAY ======================= -->
+<div class="card tight daily-card" id="dailyCard" aria-label="Model exam of the day">
+<div class="dc-head">
+<div class="dc-ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m9.5 15.5 2 2 3.5-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="dc-title">
+<h3 class="card-title">Model exam of the day</h3>
+<p class="card-sub" id="dcSub">The whole class answers the same fixed question set today — one attempt, full CEE marking, live ranking.</p>
+</div>
+<span class="badge mode-model" id="dcDateBadge">—</span>
+</div>
+<div class="dc-body" id="dcBody"></div>
+<div class="dc-lb hidden" id="dcLbWrap">
+<div class="dc-lb-head">
+<h4>Today's leaderboard <span class="dc-lb-n" id="dcLbN"></span></h4>
+<span class="muted small" id="dcLbAvg"></span>
+</div>
+<div class="lb-list" id="dcLbList"></div>
+</div>
+</div>
+<div class="an-grid">
+<div class="card tight" id="anCard">
+<h3 class="card-title">Performance analytics</h3>
+<p class="card-sub">Your accuracy trend, subject strengths and the micro-syllabus topics to work on — built from every question you have answered.</p>
+<div id="anTrend"></div>
+<div id="anBarsWrap">
+<div class="divider"></div>
+<h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:12px">Subject accuracy</h4>
+<div class="subj-bars" id="anBars"></div>
+</div>
+<div id="anTopicsWrap">
+<div class="divider"></div>
+<h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:12px">Topics to work on</h4>
+<div class="weak-topics" id="anTopics"></div>
+</div>
+<div class="empty-state hidden" id="anEmpty">
+<div class="es-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 14l3-3 3 3 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+Analytics appear after your first attempt.
+</div>
+</div>
+<div class="card tight" id="lbCard">
+<h3 class="card-title">Leaderboard</h3>
+<p class="card-sub" id="lbSub">Average accuracy across all students.</p>
+<div class="lb-list" id="lbList"></div>
+<div class="empty-state hidden" id="lbEmpty">
+<div class="es-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-4v4M7 4h10v4a5 5 0 0 1-10 0V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 5H4c0 3 1.5 5 3 5M17 5h3c0 3-1.5 5-3 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+No attempts yet — take a mock and claim the first spot!
+</div>
+</div>
+</div>
+<div class="card tight" id="contactTeacherCard" style="margin-bottom:18px">
+<div class="ct-grid">
+<div class="ct-compose">
+<h3 class="card-title" style="display:flex;align-items:center;gap:10px">
+<span class="ct-ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+Contact your teacher
+</h3>
+<p class="card-sub">Ask about a topic, request more practice questions, or report a problem. Your message also reaches their email.</p>
+<div class="field">
+<label class="label" for="ctSubject">Subject</label>
+<input class="input" id="ctSubject" maxlength="120" placeholder="e.g. Question about C1 Atomic Structure" autocomplete="off">
+</div>
+<div class="field">
+<label class="label" for="ctBody">Message</label>
+<textarea class="textarea" id="ctBody" maxlength="2000" placeholder="Write your message…"></textarea>
+</div>
+<div class="sd-mail-foot">
+<span class="muted small" id="ctCount">0 / 2000</span>
+<button class="btn btn-primary btn-sm" id="btnCtSend">Send message</button>
+</div>
+<p class="form-error" id="ctErr"></p>
+</div>
+<div class="ct-inbox">
+<h3 class="card-title" style="display:flex;align-items:center;gap:10px">
+<span class="inbox-ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+Messages from your teacher
+<span class="inbox-badge hidden" id="stInboxBadge">0</span>
+</h3>
+<div class="inbox-list scrollable" id="stInboxList"></div>
+<div class="empty-state hidden" id="stInboxEmpty">No messages from your teacher yet.</div>
+</div>
+</div>
+</div>
+<div class="card tight">
+<h3 class="card-title">Recent attempts</h3>
+<p class="card-sub">Click "Review" on any attempt to re-open your answers, the correct answers and explanations. Filter your reviews by result — correct, wrong or skipped.</p>
+<div class="filter-chips" id="attemptFilters" aria-label="Filter attempts by type"></div>
+<div class="table-wrap">
+<table class="table">
+<thead><tr><th>Date</th><th>Type</th><th>Score</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Sections</th><th></th></tr></thead>
+<tbody id="attemptsBody"></tbody>
+</table>
+</div>
+<div class="empty-state hidden" id="attemptsEmpty">
+<div class="es-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9h6m-6 4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+No attempts yet — take your first mock test to see your history here.
+</div>
+<div class="empty-state hidden" id="attemptsFilteredEmpty">No attempts of this type yet.</div>
+</div>
+<div id="studentOutbox"></div>
+</section>
+<!-- ============================ TEACHER DASHBOARD ============================ -->
+<section id="sec-teacher" class="section hidden" aria-label="Teacher dashboard">
+<div class="welcome-row">
+<div>
+<h2 id="teacherWelcome">Teacher dashboard</h2>
+<p class="sub">Approve students, curate the question bank and monitor performance.</p>
+</div>
+<div class="actions">
+<button class="btn btn-ghost big" id="btnSyllabusT"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8h7M9 12h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Official syllabus</button>
+</div>
+</div>
+<div class="stats-grid">
+<div class="stat st-warn"><div class="stat-label">Pending approvals</div><div class="stat-num" id="tchPending">0</div><div class="stat-sub"><a id="tchPendingLink" class="small">jump to queue ↓</a></div></div>
+<div class="stat st-accent"><div class="stat-label">Approved students &amp; teachers</div><div class="stat-num" id="tchStudents">0</div></div>
+<div class="stat st-green"><div class="stat-label">Question bank</div><div class="stat-num" id="tchQuestions">0</div><div class="stat-sub">MCQs available for mocks</div></div>
+<div class="stat"><div class="stat-label">Total attempts</div><div class="stat-num" id="tchAttempts">0</div><div class="stat-sub">by all students</div></div>
+</div>
+<!-- ==================== MODEL EXAM OF THE DAY (MANAGE) ==================== -->
+<div class="card tight" id="dailyManageCard" style="margin-bottom:18px" aria-label="Model exam of the day management">
+<div class="ca-head">
+<div>
+<h3 class="card-title" style="display:flex;align-items:center;gap:10px">
+<span class="dc-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m9.5 15.5 2 2 3.5-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+Model exam of the day
+</h3>
+<p class="card-sub" style="margin-bottom:12px">Generate tomorrow's paper once and the whole class takes the <b>same auto-selected questions in the same order</b> all day — one attempt each, full CEE marking, with a live daily leaderboard.</p>
+</div>
+<label class="dm-auto" title="Generate tomorrow's model exam automatically every evening">
+<input type="checkbox" id="dmAutoToggle">
+<span class="dm-auto-track" aria-hidden="true"><i></i></span>
+<span class="dm-auto-txt">Autopilot <b id="dmAutoState">off</b></span>
+</label>
+</div>
+<div class="dm-grid">
+<div class="dm-col dm-today">
+<h4 class="ca-col-title">Today <span class="muted small" id="dmTodayDate"></span></h4>
+<div id="dmTodayBox"></div>
+<div class="dm-lb hidden" id="dmLbWrap">
+<h4 class="ca-col-title" style="margin-top:14px">Today's leaderboard <span class="dc-lb-n" id="dmLbN"></span></h4>
+<div class="lb-list scrollable" id="dmLbList" style="max-height:280px"></div>
+</div>
+</div>
+<div class="dm-col dm-tomorrow">
+<h4 class="ca-col-title">Tomorrow <span class="muted small" id="dmTomorrowDate"></span></h4>
+<div id="dmTomorrowBox"></div>
+<div class="dm-gen-form" id="dmGenForm">
+<label class="label" for="dmCount">Questions (picked automatically at the official blueprint ratio)</label>
+<select class="select" id="dmCount">
+<option value="10">10 questions</option>
+<option value="20" selected>20 questions (default)</option>
+<option value="40">40 questions</option>
+<option value="60">60 questions</option>
+<option value="100">100 questions</option>
+</select>
+<label class="cbx" style="margin-top:10px"><input type="checkbox" id="dmNotify"><span class="cbx-box" aria-hidden="true"></span> Email every approved student when scheduled</label>
+<button class="btn btn-primary btn-block" id="btnDmGen" style="margin-top:12px">
+<svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 19 9-9m0 0 3-3-2-2-3 3m2 2-2-2M15 5l1-1m2 4 1-1M19 9h1M5 13l-1 1m1-5-1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+Generate tomorrow's exam
+</button>
+<p class="form-error" id="dmErr"></p>
+</div>
+</div>
+</div>
+<div class="dm-history hidden" id="dmHistoryWrap">
+<div class="divider"></div>
+<h4 class="ca-col-title">Past 7 days</h4>
+<div class="dm-hist-row" id="dmHistRow"></div>
+</div>
+</div>
+<div class="card tight" id="inboxCard" style="margin-bottom:18px">
+<div class="ca-head">
+<div>
+<h3 class="card-title" style="display:flex;align-items:center;gap:10px">
+<span class="inbox-ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+Inbox
+<span class="inbox-badge hidden" id="inboxUnreadBadge">0</span>
+</h3>
+<p class="card-sub">Messages your students send from their "Contact your teacher" card land here (and in your email).</p>
+</div>
+<button class="btn btn-ghost btn-sm hidden" id="btnInboxMarkAll">Mark all read</button>
+</div>
+<div class="inbox-list scrollable" id="inboxList"></div>
+<div class="empty-state hidden" id="inboxEmpty">
+<div class="es-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+No messages yet — students can write you from their dashboard.
+</div>
+</div>
+<div class="card tight" id="classAnalyticsCard" style="margin-bottom:18px">
+<div class="ca-head">
+<div>
+<h3 class="card-title">Class analytics</h3>
+<p class="card-sub" style="margin-bottom:12px">How the whole class is performing — subject accuracy across every student, the weakest micro-syllabus topics, and per-student progress.</p>
+</div>
+<button class="btn btn-ghost btn-sm" id="btnExportCsv" title="Download per-student progress as CSV">
+<svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+Export CSV
+</button>
+</div>
+<div class="ca-mini-grid" id="caOverview"></div>
+<div class="divider"></div>
+<div class="ca-cols">
+<div>
+<h4 class="ca-col-title">Subject accuracy — whole class</h4>
+<div class="subj-bars" id="caBars"></div>
+<div class="empty-state hidden" id="caBarsEmpty">No responses recorded yet.</div>
+</div>
+<div>
+<h4 class="ca-col-title">Class-wide topics to revisit</h4>
+<div class="ca-topic-grid" id="caTopics"></div>
+<div class="empty-state hidden" id="caTopicsEmpty">No weak topics — every practiced topic (3+ answers) is above 70% class accuracy.</div>
+</div>
+</div>
+<div class="divider"></div>
+<h4 class="ca-col-title">Student progress</h4>
+<div class="table-wrap">
+<table class="table">
+<thead><tr><th>Student</th><th>Attempts</th><th>Avg accuracy</th><th>Best score</th><th>Questions answered</th><th>Accuracy</th><th>Weakest subject</th><th>Last active</th><th></th></tr></thead>
+<tbody id="progBody"></tbody>
+</table>
+</div>
+<div class="empty-state hidden" id="progEmpty">No approved students yet — approve registrations to see progress here.</div>
+</div>
+<div class="card tight" id="pendingCard" style="margin-bottom:18px">
+<h3 class="card-title">Pending approvals</h3>
+<p class="card-sub">Approving or rejecting a user automatically emails them their status.</p>
+<div class="table-wrap">
+<table class="table">
+<thead><tr><th>Name</th><th>Email</th><th>Username</th><th>Role</th><th>Registered</th><th>Actions</th></tr></thead>
+<tbody id="pendingBody"></tbody>
+</table>
+</div>
+<div class="empty-state hidden" id="pendingEmpty">No pending registrations — you're all caught up.</div>
+</div>
+<h3 style="font-size:15px;margin:22px 0 12px">Question bank management</h3>
+<div class="tools-grid">
+<div class="card tight tool-card">
+<div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<h4>Bulk upload</h4>
+<p>Import many MCQs at once from a CSV or XLSX file.</p>
+<button class="btn btn-primary" id="btnOpenBulk">Upload CSV / XLSX</button>
+</div>
+<div class="card tight tool-card">
+<div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M9 13h6M9 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+<h4>PDF question builder</h4>
+<p>Extract a syllabus PDF, highlight sentences and turn them into MCQs.</p>
+<button class="btn btn-primary" id="btnOpenPdf">Open PDF builder</button>
+</div>
+<div class="card tight tool-card">
+<div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8h7M9 12h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+<h4>View question bank</h4>
+<p>Browse, search, filter and delete the stored questions.</p>
+<button class="btn btn-primary" id="btnOpenBank">Browse questions</button>
+</div>
+<div class="card tight tool-card">
+<div class="tool-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8m0-8a4 4 0 0 1 0 0M9.5 8.2 12 11l2.5-2.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<h4>Add single question</h4>
+<p>Manually create one MCQ — with optional image (URL or upload).</p>
+<button class="btn btn-primary" id="btnOpenAddQ">Add question</button>
+</div>
+</div>
+<div class="card tight" id="studentsCard" style="margin-bottom:18px">
+<h3 class="card-title">Users</h3>
+<p class="card-sub">Manage device bindings — a locked device means the account is bound to another browser. Resetting clears the binding and the session.</p>
+<div class="user-filter-bar">
+<div class="uf-input">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<input class="input" type="search" id="userSearch" placeholder="Search by name, email or username…" autocomplete="off" aria-label="Search users">
+</div>
+<div class="chip-row" id="userFilterChips" role="group" aria-label="Filter users">
+<button type="button" class="chip on" data-uf="all" aria-pressed="true">All</button>
+<button type="button" class="chip" data-uf="student" aria-pressed="false">Students</button>
+<button type="button" class="chip" data-uf="teacher" aria-pressed="false">Teachers</button>
+<button type="button" class="chip" data-uf="locked" aria-pressed="false">Device-locked</button>
+</div>
+</div>
+<div class="table-wrap">
+<table class="table">
+<thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Device</th><th>Actions</th></tr></thead>
+<tbody id="studentsBody"></tbody>
+</table>
+</div>
+<div class="empty-state hidden" id="studentsEmpty">No users match this filter.</div>
+</div>
+<div class="card tight" style="margin-bottom:18px">
+<h3 class="card-title">Recent activity</h3>
+<p class="card-sub">Latest mock attempts across all students.</p>
+<div class="table-wrap">
+<table class="table">
+<thead><tr><th>Date</th><th>Student</th><th>Score</th><th>Accuracy</th></tr></thead>
+<tbody id="recentBody"></tbody>
+</table>
+</div>
+<div class="empty-state hidden" id="recentEmpty">No attempts recorded yet.</div>
+</div>
+<div id="teacherOutbox"></div>
+</section>
+<!-- ============================ EXAM ENGINE ============================ -->
+<section id="sec-exam" class="section hidden" aria-label="Mock exam in progress">
+<div class="exam-topbar">
+<div class="ep">
+<b id="examQCount">Question 1 of 20</b>
+<span id="examAnsweredCount">0 of 20 answered</span>
+</div>
+<span class="badge mode-mock hidden" id="examModeChip">MOCK</span>
+<div class="timer" id="timerBox" role="timer">
+<span class="timer-label" id="timerLabel">Time left</span>
+<span class="timer-value" id="examTimer">60:00</span>
+<div class="timer-progress" id="timerBarWrap"><i id="timerBar"></i></div>
+</div>
+</div>
+<div class="exam-grid">
+<div class="card exam-main">
+<div class="q-meta" id="qMeta"></div>
+<div class="q-text" id="qText">Loading question…</div>
+<div class="q-image hidden" id="qImageWrap"><img id="qImage" alt="Question illustration" role="button" tabindex="0"></div>
+<div class="options" id="optionsList" role="radiogroup" aria-label="Answer options"></div>
+<div class="exam-nav">
+<button class="btn btn-ghost" id="btnPrev">Previous</button>
+<button class="btn btn-ghost btn-sm" id="btnClear">Clear response</button>
+<span class="spacer"></span>
+<button class="btn btn-ghost" id="btnMark">Mark for review</button>
+<button class="btn btn-primary" id="btnNext">Next</button>
+</div>
+<p class="kbd-hint">Keyboard: <kbd>A</kbd>–<kbd>D</kbd> or <kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>←</kbd><kbd>→</kbd> to navigate · <kbd>M</kbd> to mark · <button type="button" class="kbd-link" id="btnKbdHelp">all shortcuts <kbd>?</kbd></button></p>
+</div>
+<aside class="card exam-side">
+<h3>Question palette</h3>
+<div class="palette" id="paletteGrid"></div>
+<div class="legend">
+<span><i class="answered"></i>Answered</span>
+<span><i class="marked"></i>Marked</span>
+<span><i></i>Unanswered</span>
+<span><i class="current"></i>Current</span>
+</div>
+<button class="btn btn-danger btn-block" id="btnSubmitExam">Submit exam</button>
+<p class="muted small" id="examMarkingNote" style="margin:10px 0 0;text-align:center">Scoring: <b>+1</b> correct · <b>−0.25</b> wrong · <b>0</b> skipped</p>
+</aside>
+</div>
+</section>
+<!-- ============================ RESULT ============================ -->
+<section id="sec-result" class="section hidden" aria-label="Exam result">
+<div class="section-head">
+<h2>Result</h2>
+</div>
+<div class="card">
+<div class="result-hero">
+<div class="ring" id="resultRing">
+<div>
+<div class="r-pct" id="resPct">0%</div>
+<div class="r-lbl">accuracy</div>
+</div>
+</div>
+<div>
+<div class="res-score" id="resScore">0 <span>/ 0</span></div>
+<div class="res-sub" id="resSub">Final score (server-side marked)</div>
+<div class="chips" id="resChips"></div>
+</div>
+</div>
+<div class="stats-grid" style="margin-top:18px">
+<div class="stat st-green"><div class="stat-label">Correct</div><div class="stat-num" id="resCorrect">0</div></div>
+<div class="stat st-red"><div class="stat-label" id="resWrongLabel">Wrong <span class="dim">(−0.25 each)</span></div><div class="stat-num" id="resWrong">0</div></div>
+<div class="stat"><div class="stat-label">Skipped</div><div class="stat-num" id="resSkipped">0</div></div>
+<div class="stat st-accent"><div class="stat-label">Accuracy</div><div class="stat-num" id="resAccuracy">0%</div></div>
+</div>
+<div class="res-diff-wrap hidden" id="resDiffWrap">
+<h4 class="rdw-title">Accuracy by difficulty</h4>
+<div id="resDiff"></div>
+</div>
+<p class="marking-note" id="resEmailNote">A detailed per-question breakdown with explanations has been emailed to you.</p>
+<div class="back-row" style="justify-content:center">
+<button class="btn btn-primary" id="btnReviewResult">Review answers</button>
+<button class="btn btn-ghost" id="btnPrintResult" title="Print or save as PDF">
+<svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6v-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+Print / PDF
+</button>
+<button class="btn btn-ghost" id="btnBackDashFromResult">Back to dashboard</button>
+</div>
+</div>
+</section>
+<!-- ============================ REVIEW ============================ -->
+<section id="sec-review" class="section hidden" aria-label="Answer review">
+<div class="section-head">
+<div>
+<h2>Answer review</h2>
+<p class="sub muted" id="reviewMeta" style="margin-top:4px;font-size:13px"></p>
+</div>
+<div class="actions">
+<button class="btn btn-primary btn-sm" id="btnBackResult">Back to results</button>
+<button class="btn btn-ghost btn-sm" id="btnPrintReview" title="Print or save as PDF">
+<svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6v-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+Print / PDF
+</button>
+<button class="btn btn-ghost btn-sm" id="btnBackDashFromReview">Back to dashboard</button>
+</div>
+</div>
+<div class="filter-chips" id="reviewFilters" aria-label="Filter reviewed questions"></div>
+<div class="review-list" id="reviewList"></div>
+</section>
+<!-- ============================ PDF BUILDER ============================ -->
+<section id="sec-pdf" class="section hidden" aria-label="PDF question builder">
+<div class="section-head">
+<div>
+<h2>PDF-guided question builder</h2>
+<p class="sub muted" style="margin-top:4px;font-size:13px">Load a syllabus or study PDF, highlight sentences, and convert them into MCQs in the question bank.</p>
+</div>
+<div class="actions">
+<button class="btn btn-ghost btn-sm" id="btnBackDashFromPdf">Back to dashboard</button>
+</div>
+</div>
+<div class="pdf-grid">
+<div class="card tight">
+<h3 class="card-title">1 · Source text</h3>
+<p class="card-sub">Text is extracted locally in your browser using PDF.js — nothing is uploaded.</p>
+<div class="field">
+<input class="input" type="file" id="pdfFile" accept="application/pdf,.pdf">
+</div>
+<p class="form-note" id="pdfStatus">No PDF loaded yet. You can also paste text below.</p>
+<div class="tag-input-row" style="margin:10px 0">
+<button class="btn btn-ghost btn-sm" id="btnTogglePaste" type="button">Paste text instead</button>
+</div>
+<div class="field hidden" id="pasteWrap">
+<textarea class="textarea paste-area" id="pasteArea" placeholder="Paste any syllabus / study text here…"></textarea>
+<button class="btn btn-primary btn-sm" id="btnLoadPasted" type="button" style="margin-top:8px">Load pasted text</button>
+</div>
+<div class="divider"></div>
+<div class="pdf-panel scrollable" id="pdfTextPanel">PDF text will appear here once extracted. Select (highlight) any sentence below, then capture it.</div>
+<div class="capture-bar">
+<button class="btn btn-primary btn-sm" id="btnCaptureSel">Capture selected text</button>
+<span class="sel-preview" id="selPreview">Nothing selected</span>
+</div>
+</div>
+<div class="card tight">
+<h3 class="card-title">2 · Captured snippets</h3>
+<p class="card-sub">Turn any captured sentence into a question.</p>
+<div class="snippets scrollable" id="snippetList">
+<div class="empty-state">No snippets captured yet — select text on the left and press "Capture selected text".</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============================ OFFICIAL SYLLABUS ============================ -->
+<section id="sec-syllabus" class="section hidden" aria-label="Official MECEE-BL syllabus">
+<div class="section-head">
+<div>
+<h2>Official MECEE-BL syllabus<span class="sy-official">● 2026 · Third Review</span></h2>
+<p class="sub muted" style="margin-top:4px;font-size:13px" id="syHeadSub">Government of Nepal · Medical Education Commission</p>
+</div>
+<div class="actions">
+<button class="btn btn-ghost btn-sm" id="btnPrintSyllabus" title="Print / save this syllabus as PDF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px;margin-right:5px"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-6-2v.01M6 14h12v7H6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Print</button>
+<button class="btn btn-ghost btn-sm" id="btnBackDashFromSyllabus">Back</button>
+</div>
+</div>
+<div class="sy-meta" id="syMeta"></div>
+<div class="sy-format-grid" id="syFormat"></div>
+<div class="card tight">
+<h3 class="card-title">How this portal mirrors the official blueprint</h3>
+<div class="sy-mirror" id="syMirror"></div>
+</div>
+<div class="card tight">
+<h3 class="card-title">Weightage by program group</h3>
+<p class="card-sub">200 questions · 3 hours · −0.25 negative marking for every program group. Pick a group to see its subject and unit-level weightage.</p>
+<div class="sy-tabs" id="syGroupTabs" role="tablist" aria-label="Program groups"></div>
+<div id="syGroupPane"></div>
+</div>
+<div class="card tight">
+<h3 class="card-title">Unit &amp; topic-wise contents — PCB + MAT</h3>
+<p class="card-sub">The complete topic-wise contents from the official syllabus (pages 5–12). Expand any unit, or search across every unit and topic.</p>
+<div class="sy-search-row">
+<input class="input" type="search" id="sySearch" placeholder="Search units &amp; topics — e.g. genetics, thermodynamics, Doppler, reasoning…" autocomplete="off" aria-label="Search syllabus units and topics">
+<button class="btn btn-ghost btn-sm" id="sySearchClear" type="button">Clear</button>
+<span class="muted small" id="sySearchInfo"></span>
+</div>
+<div class="sy-subj-tabs" id="sySubjTabs" role="tablist" aria-label="Subjects"></div>
+<div id="syUnits"></div>
+</div>
+<div class="card tight">
+<h3 class="card-title">Official sample questions</h3>
+<p class="card-sub">Published in the MEC syllabus document — exactly as they appear in the exam pattern, with their official keys.</p>
+<div class="sy-samples" id="sySamples"></div>
+</div>
+</section>
+</main>
+<!-- ============================ FOOTER ============================ -->
+<footer class="app-footer">
+<div><b>CEE Mock Portal</b> — free mock-test practice for MBBS / BDS entrance preparation in Nepal</div>
+<p class="fp">Aligned with the official MECEE-BL 2026 syllabus (Third Review) · Marking scheme: +1 correct · −0.25 wrong · 0 skipped · Server-side scoring · Runs on Google Apps Script + Google Sheets</p>
+</footer>
+<!-- ============================ MODALS ============================ -->
+<!-- confirm -->
+<div class="modal-backdrop hidden" id="modalConfirm">
+<div class="modal" style="max-width:460px" role="dialog" aria-modal="true" aria-labelledby="cfTitle">
+<div class="modal-head"><h3 id="cfTitle">Confirm</h3><button class="modal-close" data-close="modalConfirm" aria-label="Close">✕</button></div>
+<div class="modal-body"><p id="cfBody" style="margin:0;font-size:14px;line-height:1.6"></p></div>
+<div class="modal-foot">
+<button class="btn btn-ghost" id="btnCfCancel">Cancel</button>
+<button class="btn btn-primary" id="btnCfOk">Confirm</button>
+</div>
+</div>
+</div>
+<!-- daily model exam preview (teacher) -->
+<div class="modal-backdrop hidden" id="modalDailyPreview">
+<div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="dpTitle">
+<div class="modal-head"><h3 id="dpTitle">Model exam preview</h3><span class="badge mode-model" id="dpMeta">—</span><button class="modal-close" data-close="modalDailyPreview" aria-label="Close">✕</button></div>
+<div class="modal-body">
+<p class="muted small" style="margin:0 0 12px">The exact fixed paper every student gets that day, in order. Answer keys are shown because you curate the bank — students never see them.</p>
+<div class="dp-list scrollable" id="dpList"></div>
+</div>
+</div>
+</div>
+<!-- bulk upload -->
+<div class="modal-backdrop hidden" id="modalBulk">
+<div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="bulkTitle">
+<div class="modal-head"><h3 id="bulkTitle">Bulk upload questions</h3><button class="modal-close" data-close="modalBulk" aria-label="Close">✕</button></div>
+<div class="modal-body">
+<p class="muted small" style="margin:0 0 12px">Expected columns (in order, or with a header row): <code>section</code>, <code>topic</code>, <code>question</code>, <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, <code>answer</code>, <code>explanation</code>, <code>image</code>. The <b>answer</b> must be A, B, C or D.</p>
+<div class="bulk-drop" id="bulkDrop" role="button" tabindex="0">
+<b>Click to choose a CSV / XLSX file</b><br>
+<span class="small">or drag &amp; drop it here</span>
+<input type="file" id="bulkFile" accept=".csv,.txt,.xlsx,.xls" hidden>
+</div>
+<div class="tag-input-row" style="margin-top:10px">
+<button class="btn btn-ghost btn-sm" id="btnBulkPaste" type="button">Paste CSV text instead</button>
+<button class="btn btn-ghost btn-sm" id="btnDlTemplate" type="button">Download CSV template</button>
+</div>
+<div class="field hidden" id="bulkPasteWrap" style="margin-top:10px">
+<textarea class="textarea paste-area" id="bulkPasteArea" placeholder="Paste CSV text here…"></textarea>
+<button class="btn btn-primary btn-sm" id="btnBulkParse" type="button" style="margin-top:8px">Parse pasted CSV</button>
+</div>
+<div class="bulk-summary hidden" id="bulkSummary"></div>
+<div class="table-wrap bulk-preview hidden" id="bulkPreviewWrap">
+<table class="table" style="min-width:520px">
+<thead><tr><th>#</th><th>Section</th><th>Topic</th><th>Question</th><th>Ans</th><th>Level</th><th>Status</th></tr></thead>
+<tbody id="bulkPreviewBody"></tbody>
+</table>
+</div>
+<div class="upload-errors hidden" id="bulkErrors"></div>
+</div>
+<div class="modal-foot">
+<button class="btn btn-ghost" data-close="modalBulk">Close</button>
+<button class="btn btn-ghost" id="btnBulkDryRun" disabled title="Validate against the real bank without writing anything">Validate (dry run)</button>
+<button class="btn btn-primary" id="btnDoUpload" disabled>Upload to question bank</button>
+</div>
+</div>
+</div>
+<!-- question bank viewer -->
+<div class="modal-backdrop hidden" id="modalBank">
+<div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="bankTitle">
+<div class="modal-head"><h3 id="bankTitle">Question bank</h3><span class="badge topic" id="bankCount">0 questions</span><button class="modal-close" data-close="modalBank" aria-label="Close">✕</button></div>
+<div class="modal-body">
+<div class="bank-filters">
+<select class="select" id="bankFilter" style="max-width:200px">
+<option value="">All sections</option>
+<option value="Zoology">Zoology</option>
+<option value="Botany">Botany</option>
+<option value="Chemistry">Chemistry</option>
+<option value="Physics">Physics</option>
+<option value="MAT">MAT</option>
+<optgroup label="Legacy (pre-2026)">
+<option value="Biology">Biology</option>
+<option value="Mathematics">Mathematics</option>
+</optgroup>
+<option value="__other">Other</option>
+</select>
+<select class="select" id="bankDiffFilter" style="max-width:160px" aria-label="Filter by difficulty">
+<option value="">All difficulties</option>
+<option value="easy">Easy</option>
+<option value="medium">Medium</option>
+<option value="hard">Hard</option>
+</select>
+<input class="input" id="bankSearch" placeholder="Search question text or topic…" style="max-width:320px">
+</div>
+<div class="bank-list scrollable" id="bankList"></div>
+</div>
+</div>
+</div>
+<!-- question form -->
+<div class="modal-backdrop hidden" id="modalQform">
+<div class="modal" role="dialog" aria-modal="true" aria-labelledby="qfTitle">
+<div class="modal-head"><h3 id="qfTitle">Add question</h3><button class="modal-close" data-close="modalQform" aria-label="Close"></button></div>
+<div class="modal-body">
+<div class="form-row">
+<div class="field">
+<label class="label" for="qfSection">Section</label>
+<select class="select" id="qfSection">
+<option value="Zoology">Zoology</option>
+<option value="Botany">Botany</option>
+<option value="Chemistry">Chemistry</option>
+<option value="Physics">Physics</option>
+<option value="MAT">MAT — Mental Agility Test</option>
+</select>
+</div>
+<div class="field">
+<label class="label" for="qfTopic">Topic (micro-syllabus code)</label>
+<select class="select" id="qfTopic"></select>
+</div>
+</div>
+<div class="field">
+<label class="label" for="qfQuestion">Question text</label>
+<textarea class="textarea" id="qfQuestion" placeholder="Type the question… (or capture it from the PDF builder)"></textarea>
+</div>
+<div class="form-row">
+<div class="field"><label class="label" for="qfA">Option A</label><input class="input" id="qfA" placeholder="Option A"></div>
+<div class="field"><label class="label" for="qfB">Option B</label><input class="input" id="qfB" placeholder="Option B"></div>
+</div>
+<div class="form-row">
+<div class="field"><label class="label" for="qfC">Option C</label><input class="input" id="qfC" placeholder="Option C"></div>
+<div class="field"><label class="label" for="qfD">Option D</label><input class="input" id="qfD" placeholder="Option D"></div>
+</div>
+<div class="form-row">
+<div class="field">
+<label class="label" for="qfAnswer">Correct answer</label>
+<select class="select" id="qfAnswer">
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select>
+</div>
+<div class="field">
+<label class="label" for="qfDifficulty">Difficulty</label>
+<select class="select" id="qfDifficulty" title="Used for the weighted exam mix (~20% easy / 60% medium / 20% hard)">
+<option value="easy">Easy</option>
+<option value="medium" selected>Medium</option>
+<option value="hard">Hard</option>
+</select>
+</div>
+<div class="field">
+<label class="label" for="qfTopicCode">Custom topic <span class="dim">(optional)</span></label>
+<input class="input" id="qfTopicCode" placeholder="overrides the topic dropdown">
+</div>
+</div>
+<div class="field">
+<label class="label" for="qfExplain">Explanation</label>
+<textarea class="textarea" id="qfExplain" placeholder="Shown to the student in review and in the feedback email…"></textarea>
+</div>
+<div class="field">
+<label class="label" for="qfImageUrl">Image URL <span class="dim">(or upload below)</span></label>
+<input class="input" id="qfImageUrl" placeholder="https://… or data: URI">
+<div class="tag-input-row" style="margin-top:8px">
+<button class="btn btn-ghost btn-sm" id="btnQfUpload" type="button">Upload image file</button>
+<input type="file" id="qfImgFile" accept="image/*" hidden>
+<button class="btn btn-ghost btn-sm hidden" id="btnQfRemoveImg" type="button">Remove image</button>
+</div>
+<div class="img-preview hidden" id="qfImgPreview"><img id="qfImgThumb" alt="Image preview"><span class="small muted" id="qfImgNote"></span></div>
+</div>
+<p class="form-error" id="qfError"></p>
+</div>
+<div class="modal-foot">
+<button class="btn btn-ghost" data-close="modalQform">Cancel</button>
+<button class="btn btn-primary" id="btnQfSave">Save question</button>
+</div>
+</div>
+</div>
+<!-- lightbox -->
+<div class="modal-backdrop hidden" id="modalLightbox">
+<div class="modal" style="max-width:960px;background:transparent;border:0;box-shadow:none" role="dialog" aria-modal="true" aria-label="Image preview">
+<div class="modal-body nopad"><img class="lightbox-img" id="lbImage" alt="Enlarged question illustration"></div>
+</div>
+</div>
+<!-- email preview -->
+<div class="modal-backdrop hidden" id="modalEmail">
+<div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="emTitle">
+<div class="modal-head"><h3 id="emTitle">Email</h3><button class="modal-close" data-close="modalEmail" aria-label="Close">✕</button></div>
+<div class="modal-body nopad"><iframe id="emFrame" title="Email content" sandbox="" style="width:100%;height:70vh;border:1px solid var(--border2);border-radius:10px;background:#fff"></iframe></div>
+</div>
+</div>
+<!-- practice setup -->
+<div class="modal-backdrop hidden" id="modalPractice">
+<div class="modal" style="max-width:620px" role="dialog" aria-modal="true" aria-labelledby="prTitle">
+<div class="modal-head"><h3 id="prTitle">Choose your session</h3><button class="modal-close" data-close="modalPractice" aria-label="Close">✕</button></div>
+<div class="modal-body">
+<div class="mode-cards" role="radiogroup" aria-label="Session type">
+<div class="mode-card" id="prModeMock" role="radio" aria-checked="false" tabindex="0">
+<h4><span class="mc-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Full mock</h4>
+<p>20 questions at the official MECEE-BL blueprint ratio (Zoo 4 · Bot 4 · Chem 5 · Phys 5 · MAT 2) · 54 s per question · negative marking on.</p>
+</div>
+<div class="mode-card selected" id="prModePractice" role="radio" aria-checked="true" tabindex="0">
+<h4><span class="mc-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Custom practice</h4>
+<p>Pick subjects, length and rules. Untimed option, no-penalty option and instant answer feedback.</p>
+</div>
+</div>
+<div class="pr-opts" id="prOptsBox">
+<div class="pr-focus hidden" id="prFocusBox" role="status">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<span id="prFocusText"></span>
+<button type="button" class="pr-focus-x" id="prFocusClear" aria-label="Clear topic focus">✕</button>
+</div>
+<div class="field" style="margin:0">
+<span class="label">Subjects</span>
+<div class="chip-row" id="prSubjects"></div>
+</div>
+<div class="field" style="margin:0">
+<span class="label">Difficulty</span>
+<div class="chip-row" id="prDifficulties" role="group" aria-label="Filter by difficulty">
+<button type="button" class="chip diff-easy on" data-diff="easy" aria-pressed="true"><span class="c-dot" style="background:var(--success)"></span>Easy</button>
+<button type="button" class="chip diff-medium on" data-diff="medium" aria-pressed="true"><span class="c-dot" style="background:var(--warn)"></span>Medium</button>
+<button type="button" class="chip diff-hard on" data-diff="hard" aria-pressed="true"><span class="c-dot" style="background:var(--danger)"></span>Hard</button>
+</div>
+</div>
+<div class="form-row">
+<div class="field" style="margin:0">
+<label class="label" for="prCount">Questions</label>
+<select class="select" id="prCount">
+<option value="5">5 questions</option>
+<option value="8">8 questions</option>
+<option value="10" selected>10 questions</option>
+<option value="15">15 questions</option>
+<option value="20">20 questions</option>
+<option value="30">30 questions</option>
+<option value="999">All available</option>
+</select>
+</div>
+<div class="field" style="margin:0">
+<label class="label" for="prMinutes">Duration <span class="dim">(if timed)</span></label>
+<select class="select" id="prMinutes">
+<option value="5">5 minutes</option>
+<option value="10">10 minutes</option>
+<option value="15" selected>15 minutes</option>
+<option value="20">20 minutes</option>
+<option value="30">30 minutes</option>
+<option value="45">45 minutes</option>
+<option value="60">60 minutes</option>
+</select>
+</div>
+</div>
+<div class="toggle-row">
+<div class="tr-txt"><b>Timed session</b><span>Off = relaxed pace with no auto-submit; the clock counts up instead.</span></div>
+<label class="switch" aria-label="Timed session"><input type="checkbox" id="prTimed" checked><span class="sl"></span></label>
+</div>
+<div class="toggle-row">
+<div class="tr-txt"><b>Negative marking</b><span>Wrong answers cost −0.25 each (CEE style). Turn off for penalty-free practice.</span></div>
+<label class="switch" aria-label="Negative marking"><input type="checkbox" id="prNeg" checked><span class="sl"></span></label>
+</div>
+<div class="toggle-row">
+<div class="tr-txt"><b>Instant feedback</b><span>Reveal the correct answer + explanation immediately after each question.</span></div>
+<label class="switch" aria-label="Instant feedback"><input type="checkbox" id="prIfb"><span class="sl"></span></label>
+</div>
+</div>
+<p class="form-error" id="prErr"></p>
+</div>
+<div class="modal-foot">
+<button class="btn btn-ghost" data-close="modalPractice">Cancel</button>
+<button class="btn btn-primary" id="btnPrStart">Start session</button>
+</div>
+</div>
+</div>
+<!-- account settings -->
+<div class="modal-backdrop hidden" id="modalSettings">
+<div class="modal" style="max-width:540px" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+<div class="modal-head"><h3 id="setTitle">Account settings</h3><button class="modal-close" data-close="modalSettings" aria-label="Close">✕</button></div>
+<div class="modal-body">
+<div id="setInfo" style="background:#151829;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:18px"></div>
+<h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:0 0 12px">Change password</h4>
+<div class="field">
+<label class="label" for="setOld">Current password</label>
+<input class="input" type="password" id="setOld" autocomplete="current-password" placeholder="••••••••">
+</div>
+<div class="form-row">
+<div class="field">
+<label class="label" for="setNew">New password</label>
+<input class="input" type="password" id="setNew" autocomplete="new-password" placeholder="min 6 characters">
+</div>
+<div class="field">
+<label class="label" for="setConfirm">Confirm new password</label>
+<input class="input" type="password" id="setConfirm" autocomplete="new-password" placeholder="repeat new password">
+</div>
+</div>
+<p class="form-error" id="setErr"></p>
+<p class="form-note">You will receive a confirmation email after changing your password. Your current session stays active.</p>
+</div>
+<div class="modal-foot">
+<button class="btn btn-ghost" data-close="modalSettings">Close</button>
+<button class="btn btn-primary" id="btnSetSave">Update password</button>
+</div>
+</div>
+</div>
+<!-- keyboard shortcuts help -->
+<div class="modal-backdrop hidden" id="modalKbd">
+<div class="modal" style="max-width:460px" role="dialog" aria-modal="true" aria-labelledby="kbdTitle">
+<div class="modal-head"><h3 id="kbdTitle">Keyboard shortcuts</h3><button class="modal-close" data-close="modalKbd" aria-label="Close">✕</button></div>
+<div class="modal-body">
+<div class="kbd-grid">
+<div class="kbd-row"><span class="kbd-keys"><kbd>A</kbd><kbd>B</kbd><kbd>C</kbd><kbd>D</kbd></span><span class="kbd-desc">Select option 1–4</span></div>
+<div class="kbd-row"><span class="kbd-keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></span><span class="kbd-desc">Select option 1–4 (number row)</span></div>
+<div class="kbd-row"><span class="kbd-keys"><kbd>←</kbd><kbd>→</kbd></span><span class="kbd-desc">Previous / next question</span></div>
+<div class="kbd-row"><span class="kbd-keys"><kbd>M</kbd></span><span class="kbd-desc">Mark or unmark for review</span></div>
+<div class="kbd-row"><span class="kbd-keys"><kbd>?</kbd></span><span class="kbd-desc">Open this shortcuts panel</span></div>
+</div>
+<p class="form-note" style="margin-top:14px">Shortcuts are active while a mock or practice session is open and no dialog is on screen. In instant-feedback practice, the first key press locks your answer.</p>
+</div>
+<div class="modal-foot">
+<button class="btn btn-primary" data-close="modalKbd">Got it</button>
+</div>
+</div>
+</div>
+<!-- teacher: student detail drill-down -->
+<div class="modal-backdrop hidden" id="modalStudentDetail">
+<div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="sdTitle">
+<div class="modal-head">
+<div class="sd-title-wrap">
+<span class="sd-avatar" id="sdAvatar" aria-hidden="true">S</span>
+<div>
+<h3 id="sdTitle">Student</h3>
+<p class="sd-sub muted" id="sdSub"></p>
+</div>
+</div>
+<button class="btn btn-ghost btn-sm" id="btnSdPrint" title="Print or save this student's progress report" style="margin-right:4px;flex:none">
+<svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6v-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+Print report
+</button>
+<button class="modal-close" data-close="modalStudentDetail" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div class="sd-stats" id="sdStats"></div>
+<div class="sd-section">
+<h4 class="ca-col-title">Subject accuracy</h4>
+<div class="subj-bars" id="sdBars"></div>
+<div class="empty-state hidden" id="sdBarsEmpty">No answers recorded yet.</div>
+</div>
+<div class="sd-section">
+<h4 class="ca-col-title">Topics to work on</h4>
+<div class="ca-topic-grid" id="sdTopics"></div>
+<div class="empty-state hidden" id="sdTopicsEmpty">No weak topics — every practiced topic (3+ answers) is above 70%.</div>
+</div>
+<div class="sd-section">
+<h4 class="ca-col-title">Recent attempts</h4>
+<div class="table-wrap">
+<table class="table">
+<thead><tr><th>Date</th><th>Type</th><th>Score</th><th>Accuracy</th><th>C/W/S</th></tr></thead>
+<tbody id="sdAttempts"></tbody>
+</table>
+</div>
+<div class="empty-state hidden" id="sdAttemptsEmpty">No attempts yet.</div>
+</div>
+<div class="sd-mail">
+<h4 class="ca-col-title">Message this student</h4>
+<textarea class="textarea" id="sdMsg" placeholder="e.g. Great progress this week! Focus on B5 Genetics before Friday's mock…" maxlength="2000" aria-label="Message to student"></textarea>
+<div class="sd-mail-foot">
+<span class="muted small" id="sdMsgCount">0 / 2000</span>
+<button class="btn btn-primary btn-sm" id="sdSend">Send message</button>
+</div>
+<p class="form-error" id="sdErr"></p>
+</div>
+</div>
+</div>
+</div>
+<!-- print-only student progress report (filled at print time) -->
+<div class="print-report" id="printReport" aria-hidden="true"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
